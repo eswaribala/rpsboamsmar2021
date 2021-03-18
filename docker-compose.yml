@@ -1,26 +1,23 @@
 version: '3.9'
 
 services:
-  postgres:
-    image: postgres
+  mysql:
+    image: mysql
     environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=webstoredb
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=boainterdevcustomerdb
     volumes:
-      - /data/postgressql
-  redis:
-    image: redis
-    volumes:
-      - /data/redisvol
-  webstore-app:
-    image: webstoreappv2
+      - /data/mysql
+  
+  upload-app:
+    image: upload-appv1
     build:
       context: ./
       dockerfile: dockerfile
     depends_on:
-      - postgres
-      - redis
+      - mysql
+      
     ports:
-      - 7072:7070
+      - 7074:7070
     volumes:
       - /data/compose-app
